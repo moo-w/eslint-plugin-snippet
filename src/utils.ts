@@ -9,7 +9,7 @@ const defaultOptions: Required<ESLintPluginSnippetOptions> = {
   snippets: builtInSnippets,
 }
 
-export function mergeOptionsWithDefaults(options: ESLintPluginSnippetOptions): Required<ESLintPluginSnippetOptions> {
+export function mergeOptionsWithDefaults(options: ESLintPluginSnippetOptions = {}): Required<ESLintPluginSnippetOptions> {
   return {
     ...defaultOptions,
     ...options,

@@ -1,4 +1,4 @@
 import { createPlugin } from './plugin'
 import { mergeOptionsWithDefaults } from './utils'
 
-export default createPlugin(mergeOptionsWithDefaults({}))
+export default createPlugin(mergeOptionsWithDefaults())
