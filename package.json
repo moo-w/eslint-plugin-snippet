@@ -16,9 +16,24 @@
     "eslint-plugin",
     "codemod"
   ],
+  "sideEffects": false,
   "exports": {
-    ".": "./dist/index.js",
-    "./config": "./dist/config.js"
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./config": {
+      "import": "./dist/config.js",
+      "require": "./dist/config.cjs"
+    },
+    "./snippets": {
+      "import": "./dist/snippets.js",
+      "require": "./dist/snippets.cjs"
+    },
+    "./types": {
+      "import": "./dist/types.js",
+      "require": "./dist/types.cjs"
+    }
   },
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -29,19 +44,31 @@
   "scripts": {
     "build": "tsup",
     "watch": "tsup --watch",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "typecheck": "tsc --noEmit",
-    "eslint:inspect": "pnpx @eslint/config-inspector"
+    "eslint:inspect": "pnpx @eslint/config-inspector",
+    "release": "bumpp && npm publish"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.8.1",
     "@types/estree": "^1.0.6",
     "eslint": "^9.22.0",
+    "lint-staged": "^15.4.3",
+    "simple-git-hooks": "^2.11.1",
     "tsup": "^8.4.0",
     "typescript": "^5.8.2"
   },
   "pnpm": {
     "onlyBuiltDependencies": [
-      "esbuild"
+      "esbuild",
+      "simple-git-hooks"
     ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "npx lint-staged"
+  },
+  "lint-staged": {
+    "*": "eslint --fix"
   }
 }
