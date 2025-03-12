@@ -1,10 +1,9 @@
 /* eslint-disable antfu/no-import-dist */
 import { antfu } from '@antfu/eslint-config'
 import snippet from './dist/config.js'
-import { builtInSnippets, defineSnippets } from './dist/snippets.js'
+import { defineSnippets } from './dist/snippets.js'
 
 const snippets = defineSnippets([
-  ...builtInSnippets,
   {
     name: 'console.log',
     command: 'c',
