@@ -8,6 +8,122 @@ Comment-as-snippet for one-off codemod with ESLint.
 
 This plugin is very much inspired by [eslint-plugin-command](https://github.com/antfu/eslint-plugin-command) by [Anthony Fu](https://github.com/antfu). This plugin also serves as a micro-codemod tool triggers by special comments on-demand, resuse the infrastructure of ESLint.
 
+## Installation
+
+Install the `eslint-plugin-snippet` package:
+
+```bash
+npm i eslint-plugin-snippet -D
+```
+
+In your flat config eslint.config.mjs:
+
+```js
+// eslint.config.mjs
+import snippet from 'eslint-plugin-snippet/config'
+
+export default [
+  // ... your other flat config
+  snippet(),
+]
+```
+
+<details open>
+  <summary>Legacy Config</summary>
+  <p>While no longer supported, you may still use the legacy .eslintrc.js file:</p>
+
+```js
+// .eslintrc.js
+module.exports = {
+  plugins: [
+    'command'
+  ],
+  rules: {
+    'command/command': 'error',
+  },
+}
+```
+</details>
+
+## Plugin Configuration
+
+You can configure the plugin by passing an object to the `snippet` function.
+
+```js
+// eslint.config.mjs
+import snippet from 'eslint-plugin-snippet/config'
+import { builtInSnippets } from 'eslint-plugin-snippet/snippets'
+
+export default [
+  // ... your other flat config
+  snippet({
+    prefix: ';',
+    separator: '>',
+    ignoreIndicator: '_',
+    snippets: builtInSnippets,
+  }),
+]
+```
+
+One of the built-in snippets is `function`:
+
+```js
+export default {
+  name: 'function',
+  command: 'f',
+  snippet: `function fn($1) {
+  $0
+}`,
+}
+```
+
+For examle, with the above configuration, you can trigger the snippet by `//;f>body>param1,param2`, which will be expanded to:
+
+```js
+function fn(param1, param2) {
+  body
+}
+```
+
+`//;f>_>param` will be expanded to:
+
+```js
+function fn(param) {
+  
+}
+```
+
+## Custom Snippets
+
+It's also possible to define your custom snippets.
+
+```js
+// eslint.config.mjs
+import { builtInSnippets, defineSnippets } from 'eslint-plugin-snippet/snippets'
+
+const snippets = defineSnippets([
+  ...builtInSnippets,
+  {
+    name: 'console.log',
+    command: 'c',
+    snippet: 'console.log($0)',
+  },
+  {
+    name: 'function',
+    command: 'f',
+    snippet: `function fn($1) {
+  $0
+}`,
+  },
+])
+```
+
+> As you can see, the index of the snippet-slots starts from 0: `$0`
+
+## TODOs
+- [ ] support something like `;a>;b>>testb1>>testb2>testa1>;c>>;d>>>testd1`
+- [ ] support escape character
+
 <!-- Badges -->
 
 [npm-version-src]: https://img.shields.io/npm/v/eslint-plugin-snippet?style=flat&colorA=080f12&colorB=1fa669

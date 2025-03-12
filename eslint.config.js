@@ -1,9 +1,10 @@
 /* eslint-disable antfu/no-import-dist */
 import { antfu } from '@antfu/eslint-config'
 import snippet from './dist/config.js'
-import { defineSnippets } from './dist/snippets.js'
+import { builtInSnippets, defineSnippets } from './dist/snippets.js'
 
 const snippets = defineSnippets([
+  ...builtInSnippets,
   {
     name: 'console.log',
     command: 'c',
@@ -26,6 +27,13 @@ export default antfu(
   }),
 )
   .append(
+    {
+      files: ['**/*.md/**/*'],
+      rules: {
+        'snippet/snippet': 'off',
+        'style/no-trailing-spaces': 'off',
+      },
+    },
     {
       files: ['example.ts'],
       rules: {
