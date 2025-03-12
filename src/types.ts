@@ -44,21 +44,6 @@ export interface Snippet {
    * Snippet text
    */
   snippet: string
-
-  /**
-   * Override plugin prefix
-   */
-  prefix?: string
-
-  /**
-   * Override plugin separator
-   */
-  separator?: string
-
-  /**
-   * Override plugin ignore indicator
-   */
-  ignoreIndicator?: string
 }
 
 export function defineSnippets(snippets: Snippet[]): Snippet[] {

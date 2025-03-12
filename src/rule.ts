@@ -3,7 +3,7 @@ import type { ESLintPluginSnippetOptions } from './types'
 import applySnippet from './applySnippet'
 
 export function createRule(options: Required<ESLintPluginSnippetOptions>): Rule.RuleModule {
-  const { snippets } = options
+  const { prefix, separator, ignoreIndicator, snippets } = options
 
   return {
     meta: {
@@ -22,10 +22,6 @@ export function createRule(options: Required<ESLintPluginSnippetOptions>): Rule.
         const isLineComment = comment.type === 'Line'
         if (isLineComment) {
           for (const snippet of snippets) {
-            const prefix = snippet.prefix || options.prefix
-            const separator = snippet.separator || options.separator
-            const ignoreIndicator = snippet.ignoreIndicator || options.ignoreIndicator
-
             const commandRegex = new RegExp(`^${prefix}${snippet.command}`)
 
             const shouldApplySnippet = commandRegex.test(comment.value)
