@@ -1,14 +1,14 @@
 import type { ESLintPluginSnippetOptions } from './types'
-import { createPluginWithSnippets } from './plugin'
+import { createPlugin } from './plugin'
 import { mergeOptionsWithDefaults } from './utils'
 
 export default function config(options: ESLintPluginSnippetOptions = {}) {
-  const { name, prefix, snippets } = mergeOptionsWithDefaults(options)
+  const opts = mergeOptionsWithDefaults(options)
 
   return {
-    name,
+    name: opts.name,
     plugins: {
-      snippet: createPluginWithSnippets(prefix, snippets),
+      snippet: createPlugin(opts),
     },
     rules: {
       'snippet/snippet': 'error',

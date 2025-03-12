@@ -1,6 +1,4 @@
-import { createPluginWithSnippets } from './plugin'
-import builtInSnippets from './snippets'
+import { createPlugin } from './plugin'
+import { mergeOptionsWithDefaults } from './utils'
 
-const defaultPrefix = ';'
-
-export default createPluginWithSnippets(defaultPrefix, builtInSnippets)
+export default createPlugin(mergeOptionsWithDefaults({}))

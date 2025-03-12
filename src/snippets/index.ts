@@ -1,7 +1,7 @@
 import arrowFunction from './arrow-function'
 import func from './function'
 
-export default [
+export const builtInSnippets = [
   arrowFunction,
   func,
 ]

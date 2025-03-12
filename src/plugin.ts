@@ -1,16 +1,17 @@
 import type { ESLint } from 'eslint'
-import type { Snippet } from './types'
+import type { ESLintPluginSnippetOptions } from './types'
 import { version } from '../package.json'
-import { createRuleWithSnippets } from './rule'
+import { createRule } from './rule'
 
-export function createPluginWithSnippets(prefix: string, snippets: Snippet[]): ESLint.Plugin {
+export function createPlugin(options: Required<ESLintPluginSnippetOptions>): ESLint.Plugin {
+  const { name } = options
   return {
     meta: {
-      name: 'snippet',
+      name,
       version,
     },
     rules: {
-      snippet: createRuleWithSnippets(prefix, snippets),
+      snippet: createRule(options),
     },
   }
 }

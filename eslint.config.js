@@ -1,10 +1,29 @@
+/* eslint-disable antfu/no-import-dist */
 import { antfu } from '@antfu/eslint-config'
-// eslint-disable-next-line antfu/no-import-dist
 import snippet from './dist/config.js'
+import { defineSnippets } from './dist/snippets.js'
+
+const snippets = defineSnippets([
+  {
+    name: 'console.log',
+    command: 'c',
+    snippet: 'console.log($0)',
+  },
+  {
+    name: 'function',
+    command: 'f',
+    snippet: `function fn($1) {
+  $0
+}`,
+  },
+])
 
 export default antfu(
   {},
-  snippet(),
+  snippet({
+    prefix: ';',
+    snippets,
+  }),
 )
   .append(
     {

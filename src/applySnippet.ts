@@ -2,14 +2,14 @@ import type { Rule } from 'eslint'
 import type { Comment } from 'estree'
 import type { Snippet } from './types'
 
-export default function applySnippet(ctx: Rule.RuleContext, comment: Comment, snippetConfig: Snippet) {
+export default function applySnippet(ctx: Rule.RuleContext, comment: Comment, snippetConfig: Snippet, separator: string, ignoreIndicator: string): void {
   const {
     name,
     snippet,
   } = snippetConfig
 
   const commentText = comment.value.trim()
-  const params = commentText.split(' ').slice(1).map(param => param === '_' ? '' : param)
+  const params = commentText.split(separator).slice(1).map(param => param === ignoreIndicator ? '' : param)
   const slotRegex = /\$\d+/g
   const slotCount = (snippet.match(slotRegex) || []).length
   const paramCount = params.length
