@@ -6,7 +6,7 @@ Comment-as-snippet for one-off codemod with ESLint.
 
 ## Introduction
 
-This plugin is very much inspired by [eslint-plugin-command](https://github.com/antfu/eslint-plugin-command) by [Anthony Fu](https://github.com/antfu). This plugin also serves as a micro-codemod tool triggers by special comments on-demand, resuse the infrastructure of ESLint.
+This plugin is very much inspired by [eslint-plugin-command](https://github.com/antfu/eslint-plugin-command) by [Anthony Fu](https://github.com/antfu). This plugin also serves as a micro-codemod tool triggers by special comments on-demand, reuse the infrastructure of ESLint.
 
 ## Installation
 
@@ -28,7 +28,7 @@ export default [
 ]
 ```
 
-<details open>
+<details close>
   <summary>Legacy Config</summary>
   <p>While no longer supported, you may still use the legacy .eslintrc.js file:</p>
 
@@ -77,7 +77,7 @@ export default {
 }
 ```
 
-For examle, with the above configuration, you can trigger the snippet by `//;f>body>param1,param2`, which will be expanded to:
+For examle, with the above configuration, you can trigger the snippet by `//;f>body>param1, param2`, which will be expanded to:
 
 ```js
 function fn(param1, param2) {
@@ -89,7 +89,7 @@ function fn(param1, param2) {
 
 ```js
 function fn(param) {
-  
+
 }
 ```
 
