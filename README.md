@@ -36,10 +36,10 @@ export default [
 // .eslintrc.js
 module.exports = {
   plugins: [
-    'command'
+    'snippet'
   ],
   rules: {
-    'command/command': 'error',
+    'snippet/snippet': 'error',
   },
 }
 ```
