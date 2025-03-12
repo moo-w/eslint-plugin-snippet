@@ -8,8 +8,8 @@ export default function applySnippet(ctx: Rule.RuleContext, comment: Comment, sn
     snippet,
   } = snippetConfig
 
-  const commentText = comment.value.trim()
-  const params = commentText.split(separator).slice(1).map(param => param === ignoreIndicator ? '' : param)
+  const commentValue = comment.value.trim()
+  const params = commentValue.split(separator).slice(1).map(param => param === ignoreIndicator ? '' : param)
   const slotRegex = /\$\d+/g
   const slotCount = (snippet.match(slotRegex) || []).length
   const paramCount = params.length
@@ -26,9 +26,15 @@ export default function applySnippet(ctx: Rule.RuleContext, comment: Comment, sn
   })
 
   // replace the comment with the snippet
+  // replace space with '⋅'
+  const reportSnippet = newSnippet.replace(/ /g, '⋅')
   ctx.report({
     loc: comment.loc!,
-    message: `Apply snippet "${name}"`,
+    message: `[eslint-plugin-snippet]
+Apply snippet "${name}"
+>>>
+${reportSnippet}
+<<<`,
     fix(fixer) {
       return fixer.replaceText(comment, newSnippet)
     },
