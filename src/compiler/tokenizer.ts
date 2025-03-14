@@ -1,3 +1,42 @@
+import type { ESLintPluginSnippetOptions } from '../types'
+
+export enum TokenType {
+  Command = 'Command',
+  CommandPrefix = 'CommandPrefix',
+  Separator = 'Separator',
+  SlotIgnore = 'SlotIgnore',
+  SlotText = 'SlotText',
+}
+
+export interface TokenCommon {
+  type: TokenType
+  value: string
+}
+
+export interface CommandPrefixToken extends TokenCommon {
+  type: TokenType.CommandPrefix
+}
+
+export interface CommandToken extends TokenCommon {
+  type: TokenType.Command
+}
+
+export interface SeparatorToken extends TokenCommon {
+  type: TokenType.Separator
+}
+
+export interface SlotTextToken extends TokenCommon {
+  type: TokenType.SlotText
+}
+
+export interface SlotIgnoreToken extends TokenCommon {
+  type: TokenType.SlotIgnore
+}
+
+export type Token = CommandToken | CommandPrefixToken | SeparatorToken | SlotIgnoreToken | SlotTextToken
+
+export type TokenizerOptions = Required<Pick<ESLintPluginSnippetOptions, 'commandPrefix' | 'separator' | 'ignoreIndicator'>>
+
 /**
  * A tokenizer that tokenize the a snippet comment into tokens
  *
@@ -6,10 +45,12 @@
  *
  * The tokenizer will tokenize it into the following tokens:
  * [
+ *    { type: TokenType.CommandPrefix, value: ';' },
  *    { type: TokenType.Command, value: 'a' },
  *    { type: TokenType.Separator, value: '>' },
  *    { type: TokenType.Ignore, value: '_' },
  *    { type: TokenType.Separator, value: '>' },
+ *    { type: TokenType.CommandPrefix, value: ';' },
  *    { type: TokenType.Command, value: 'b' },
  *    { type: TokenType.Separator, value: '>>' },
  *    { type: TokenType.Slot, value: 'testb1' },
@@ -18,33 +59,18 @@
  *    { type: TokenType.Separator, value: '>' },
  *    { type: TokenType.Slot, value: 'testa1' },
  *    { type: TokenType.Separator, value: '>' },
+ *    { type: TokenType.CommandPrefix, value: ';' },
  *    { type: TokenType.Command, value: 'c' },
  *    { type: TokenType.Separator, value: '>>' },
+ *    { type: TokenType.CommandPrefix, value: ';' },
  *    { type: TokenType.Command, value: 'd' },
  *    { type: TokenType.Separator, value: '>>>' },
  *    { type: TokenType.Slot, value: 'testd1' },
  * ]
  */
-
-import type { ESLintPluginSnippetOptions } from '../types'
-
-export enum TokenType {
-  Command = 'Command',
-  Separator = 'Separator',
-  Ignore = 'Ignore',
-  Slot = 'Slot',
-}
-
-export interface Token {
-  type: TokenType
-  value: string
-}
-
-export type TokenizerOptions = Required<Omit<ESLintPluginSnippetOptions, 'name' | 'snippets'>>
-
 export function tokenizer(comment: string, options: TokenizerOptions): Token[] {
   const tokens: Token[] = []
-  const { commandPrefix, separator, ignoreIndicator } = options
+  const { commandPrefix, separator } = options
 
   let p = 0
   const commentLength = comment.length
@@ -52,7 +78,10 @@ export function tokenizer(comment: string, options: TokenizerOptions): Token[] {
     const c = comment[p]
 
     if (c === commandPrefix) {
-      const { token, pointer } = greedyMatchText(comment, p + 1, [commandPrefix, separator], TokenType.Command)
+      tokens.push({ type: TokenType.CommandPrefix, value: c })
+      p++
+
+      const { token, pointer } = greedyMatchCommand(comment, p, options)
       tokens.push(token)
       p = pointer
     }
@@ -62,7 +91,7 @@ export function tokenizer(comment: string, options: TokenizerOptions): Token[] {
       p = pointer
     }
     else {
-      const { token, pointer } = greedyMatchSlot(comment, p, ignoreIndicator)
+      const { token, pointer } = greedyMatchSlotText(comment, p, options)
       tokens.push(token)
       p = pointer
     }
@@ -71,10 +100,10 @@ export function tokenizer(comment: string, options: TokenizerOptions): Token[] {
   return tokens
 }
 
-function greedyMatchText(
+function greedyMatch(
   comment: string,
   pointer: number,
-  notValidStrs: string[],
+  specialCharacters: string[],
   tokenType: TokenType,
 ) {
   const ec = '\\'
@@ -89,7 +118,7 @@ function greedyMatchText(
       pointer++
       tokenVal += comment[pointer] ?? ''
     }
-    else if (notValidStrs.includes(c)) {
+    else if (specialCharacters.includes(c)) {
       break
     }
     else {
@@ -104,10 +133,27 @@ function greedyMatchText(
   }
 }
 
-function greedyMatchSlot(comment: string, pointer: number, ignoreIndicator: string) {
-  const { pointer: p, token } = greedyMatchText(comment, pointer, ['>', ';'], TokenType.Slot)
+function greedyMatchCommand(
+  comment: string,
+  pointer: number,
+  tokenizerOpts: TokenizerOptions,
+) {
+  const { commandPrefix, separator } = tokenizerOpts
+
+  const { pointer: p, token } = greedyMatch(comment, pointer, [commandPrefix, separator], TokenType.Command)
+  return { pointer: p, token }
+}
+
+function greedyMatchSlotText(
+  comment: string,
+  pointer: number,
+  tokenizerOpts: TokenizerOptions,
+) {
+  const { commandPrefix, separator, ignoreIndicator } = tokenizerOpts
+
+  const { pointer: p, token } = greedyMatch(comment, pointer, [commandPrefix, separator], TokenType.SlotText)
   if (token.value === ignoreIndicator) {
-    token.type = TokenType.Ignore
+    token.type = TokenType.SlotIgnore
     token.value = ignoreIndicator
   }
 
