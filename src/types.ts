@@ -6,10 +6,10 @@ export interface ESLintPluginSnippetOptions {
   name?: string
 
   /**
-   * Prefix for the snippet-comments
+   * Prefix for the snippet-command
    * @default ':'
    */
-  prefix?: string
+  commandPrefix?: string
 
   /**
    * Separator for the snippet-comments

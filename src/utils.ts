@@ -3,7 +3,7 @@ import { builtInSnippets } from './snippets'
 
 const defaultOptions: Required<ESLintPluginSnippetOptions> = {
   name: 'snippet',
-  prefix: ';',
+  commandPrefix: ';',
   separator: '>',
   ignoreIndicator: '_',
   snippets: builtInSnippets,

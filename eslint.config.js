@@ -21,7 +21,7 @@ const snippets = defineSnippets([
 export default antfu(
   {},
   snippet({
-    prefix: ';',
+    commandPrefix: ';',
     snippets,
   }),
 )

@@ -57,7 +57,7 @@ import { builtInSnippets } from 'eslint-plugin-snippet/snippets'
 export default [
   // ... your other flat config
   snippet({
-    prefix: ';',
+    commandPrefix: ';',
     separator: '>',
     ignoreIndicator: '_',
     snippets: builtInSnippets,
