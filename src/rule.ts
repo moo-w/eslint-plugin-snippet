@@ -11,6 +11,11 @@ export function createRule(options: Required<ESLintPluginSnippetOptions>): Rule.
       docs: {
         description: 'Comment-as-snippet for one-off codemod with ESLint',
       },
+      messages: {
+        'snippet-fix': `snippet [{{name}}] fix:
+{{separator}}
+{{snippet}}`,
+      },
       fixable: 'code',
       schema: [],
     },

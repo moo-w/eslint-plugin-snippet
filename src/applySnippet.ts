@@ -30,11 +30,12 @@ export default function applySnippet(ctx: Rule.RuleContext, comment: Comment, sn
   const reportSnippet = newSnippet.replace(/ /g, '⋅')
   ctx.report({
     loc: comment.loc!,
-    message: `[eslint-plugin-snippet]
-Apply snippet "${name}"
->>>
-${reportSnippet}
-<<<`,
+    messageId: 'snippet-fix',
+    data: {
+      name,
+      separator: '-'.repeat(name.length + 15),
+      snippet: reportSnippet,
+    },
     fix(fixer) {
       return fixer.replaceText(comment, newSnippet)
     },
