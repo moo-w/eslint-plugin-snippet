@@ -51,6 +51,9 @@
     "eslint:inspect": "pnpx @eslint/config-inspector",
     "release": "bumpp && npm publish"
   },
+  "peerDependencies": {
+    "eslint": "*"
+  },
   "devDependencies": {
     "@antfu/eslint-config": "^4.8.1",
     "@types/estree": "^1.0.6",

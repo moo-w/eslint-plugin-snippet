@@ -4,9 +4,7 @@
 
 Comment-as-snippet for one-off codemod with ESLint.
 
-
 https://github.com/user-attachments/assets/28d8f7bb-e5ec-40aa-9125-d18d3da43f61
-
 
 ## Introduction
 
