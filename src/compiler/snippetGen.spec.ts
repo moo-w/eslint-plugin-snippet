@@ -25,14 +25,14 @@ describe('snippetGen', () => {
     const comment = ';test'
     const tokens = tokenizer(comment, tokenizerOpts)
     const ast = parser(tokens)!
-    expect(() => snippetGen(ast, snippets)).toThrowError(`Snippet not found: test`)
+    expect(snippetGen(ast, snippets)).toMatchInlineSnapshot(`""`)
   })
 
   it('too many slots in command', () => {
     const comment = ';fn>arg0>arg1>arg2>arg3'
     const tokens = tokenizer(comment, tokenizerOpts)
     const ast = parser(tokens)!
-    expect(() => snippetGen(ast, snippets)).toThrowError(`Too many slots in command: fn[function], expected 3, got 4`)
+    expect(snippetGen(ast, snippets)).toMatchInlineSnapshot(`""`)
   })
 
   it('command slots less than template slots', () => {

@@ -7,8 +7,7 @@ export function snippetGen(node: CommandNode, snippets: Snippet[]): string {
 
   const s = snippets.find(s => s.command === node.value)
   if (!s) {
-    throw new Error(`Snippet not found: ${node.value}`)
-    // result = s.snippet.replace(/\$\d+/g, '')
+    return ''
   }
 
   let template = s.snippet
@@ -18,7 +17,7 @@ export function snippetGen(node: CommandNode, snippets: Snippet[]): string {
   const commandSlots = node.body
 
   if (commandSlotCount > templateSlotCount) {
-    throw new Error(`Too many slots in command: ${s.command}[${s.name}], expected ${templateSlotCount}, got ${commandSlotCount}`)
+    return ''
   }
 
   commandSlots.forEach((node, i) => {
