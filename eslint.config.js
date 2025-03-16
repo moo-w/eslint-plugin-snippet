@@ -12,7 +12,7 @@ const snippets = defineSnippets([
   {
     name: 'function',
     command: 'f',
-    snippet: `function fn($1) {
+    snippet: `function fn() {
   $0
 }`,
   },
@@ -38,6 +38,7 @@ export default antfu(
       rules: {
         'antfu/top-level-function': 'off',
         'unused-imports/no-unused-vars': 'off',
+        'style/spaced-comment': 'off',
       },
     },
   )
