@@ -27,11 +27,22 @@ export function createRule(options: Required<ESLintPluginSnippetOptions>): Rule.
         const isLineComment = comment.type === 'Line'
         if (isLineComment) {
           for (const snippet of snippets) {
-            const commandRegex = new RegExp(`^${commandPrefix}${snippet.command}`)
+            const commandRegex = new RegExp(`^${commandPrefix}${snippet.command}(?:${separator}|\\b)`)
 
             const shouldApplySnippet = commandRegex.test(comment.value)
-            if (shouldApplySnippet)
-              applySnippet(ctx, comment, snippet, separator, ignoreIndicator)
+            // eslint-disable-next-line no-console
+            console.log(`shouldApplySnippet ${snippet.command}`, shouldApplySnippet, comment.value, commandRegex)
+            if (shouldApplySnippet) {
+              applySnippet({
+                ctx,
+                comment,
+                matchedSnippet: snippet,
+                snippets,
+                commandPrefix,
+                separator,
+                ignoreIndicator,
+              })
+            }
           }
         }
       }
