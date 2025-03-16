@@ -7,12 +7,12 @@ const snippets = defineSnippets([
   {
     name: 'console.log',
     command: 'c',
-    snippet: 'console.log($0)',
+    template: 'console.log($0)',
   },
   {
     name: 'function',
     command: 'f',
-    snippet: `function fn() {
+    template: `function fn() {
   $0
 }`,
   },

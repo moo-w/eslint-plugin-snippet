@@ -10,9 +10,9 @@ export function snippetGen(node: CommandNode, snippets: Snippet[]): string {
     return ''
   }
 
-  let template = s.snippet
+  let template = s.template
   const templateSlotRegex = /\$\d+/g
-  const templateSlotCount = s.snippet.match(templateSlotRegex)?.length || 0
+  const templateSlotCount = s.template.match(templateSlotRegex)?.length || 0
   const commandSlotCount = node.body.length
   const commandSlots = node.body
 

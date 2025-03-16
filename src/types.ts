@@ -43,7 +43,7 @@ export interface Snippet {
   /**
    * Snippet text
    */
-  snippet: string
+  template: string
 }
 
 export function defineSnippets(snippets: Snippet[]): Snippet[] {

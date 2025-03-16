@@ -71,7 +71,7 @@ One of the built-in snippets is `function`:
 export default {
   name: 'function',
   command: 'f',
-  snippet: `function fn($1) {
+  template: `function fn($1) {
   $0
 }`,
 }
@@ -106,12 +106,12 @@ const snippets = defineSnippets([
   {
     name: 'console.log',
     command: 'c',
-    snippet: 'console.log($0)',
+    template: 'console.log($0)',
   },
   {
     name: 'function',
     command: 'f',
-    snippet: `function fn($1) {
+    template: `function fn($1) {
   $0
 }`,
   },

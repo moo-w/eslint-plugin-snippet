@@ -14,7 +14,7 @@ const snippets: Snippet[] = [
   {
     name: 'function',
     command: 'fn',
-    snippet: `function $0($1) {
+    template: `function $0($1) {
   $2
 }`,
   },

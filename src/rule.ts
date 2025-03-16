@@ -30,8 +30,6 @@ export function createRule(options: Required<ESLintPluginSnippetOptions>): Rule.
             const commandRegex = new RegExp(`^${commandPrefix}${snippet.command}(?:${separator}|\\b)`)
 
             const shouldApplySnippet = commandRegex.test(comment.value)
-            // eslint-disable-next-line no-console
-            console.log(`shouldApplySnippet ${snippet.command}`, shouldApplySnippet, comment.value, commandRegex)
             if (shouldApplySnippet) {
               applySnippet({
                 ctx,
