@@ -12,7 +12,7 @@ const snippets = defineSnippets([
   {
     name: 'function',
     command: 'f',
-    template: `function fn() {
+    template: `function fn($1) {
   $0
 }`,
   },

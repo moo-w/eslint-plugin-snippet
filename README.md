@@ -120,9 +120,42 @@ const snippets = defineSnippets([
 
 > As you can see, the index of the snippet-slots starts from 0: `$0`
 
+## Usage
+
+- Command Only: `//;f`
+  ```js
+  function fn() {
+
+  }
+  ```
+- Command with slots: `//;f>body>param`
+  ```js
+  function fn(param) {
+    body
+  }
+  ```
+- Ignore: `//;f>_>param`
+  ```js
+  function fn(param) {
+
+  }
+  ```
+- Escape character: `//;c>'<test\>\;'`
+  ```js
+  console.log('<test>;')
+  ```
+- Commnd nesting: `//;f>;f>>;c>>>test>>test`
+  ```js
+  function fn() {
+    function fn(test) {
+      console.log(test)
+    }
+  }
+  ```
+
 ## TODOs
-- [ ] support something like `;a>;b>>testb1>>testb2>testa1>;c>>;d>>>testd1`
-- [ ] support escape character
+- [x] support something like `;>;b>>testb1>>testb2>testa1>;c>>;d>>>testd1`
+- [x] support escape character
 
 <!-- Badges -->
 
