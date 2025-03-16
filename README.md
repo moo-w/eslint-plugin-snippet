@@ -157,6 +157,10 @@ const snippets = defineSnippets([
   }
   ```
 
+## Built-in Snippets
+- [arrow function](src/snippets/arrow-function.ts)
+- [function](src/snippets/function.ts)
+
 ## TODOs
 - [x] support something like `;>;b>>testb1>>testb2>testa1>;c>>;d>>>testd1`
 - [x] support escape character
