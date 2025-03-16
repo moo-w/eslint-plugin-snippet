@@ -4,6 +4,10 @@
 
 Comment-as-snippet for one-off codemod with ESLint.
 
+
+https://github.com/user-attachments/assets/28d8f7bb-e5ec-40aa-9125-d18d3da43f61
+
+
 ## Introduction
 
 This plugin is very much inspired by [eslint-plugin-command](https://github.com/antfu/eslint-plugin-command) by [Anthony Fu](https://github.com/antfu). This plugin also serves as a micro-codemod tool triggers by special comments on-demand, reuse the infrastructure of ESLint.
